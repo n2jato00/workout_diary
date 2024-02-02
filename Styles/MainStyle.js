@@ -2,6 +2,18 @@ import { StyleSheet, Platform } from "react-native";
 import Constants from "expo-constants";
 import { MD3LightTheme, Provider } from 'react-native-paper';
 
+const MyTheme = {
+    ...MD3LightTheme,
+    roundness: 2,
+    colors: {
+        ...MD3LightTheme.colors,
+        primary: 'brown',
+        primaryContaine: 'red',
+        surface: 'white',
+        secondaryContainer: 'green',
+    },
+};
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -24,6 +36,11 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 10,
     },
+    Modal: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 });
 
-export { styles };
+export { styles, MyTheme };

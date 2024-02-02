@@ -1,16 +1,16 @@
 // AddWorkoutScreen.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { View, Text, TextInput, Button, SafeAreaView, Modal, Pressable } from 'react-native';
+import { View, Text, Modal, Pressable } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { styles } from '../Styles/MainStyle.js';
-import { MD3LightTheme, Provider, SegmentedButtons } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
-import { WorkoutDataProvider, useWorkoutData } from '../Components/WorkoutContext.js'
+import { SegmentedButtons, Button, TextInput } from 'react-native-paper';
+import { WorkoutContext } from '../Components/Context.js';
+
 
 export default function AddWorkoutScreen() {
-    const { addWorkout } = useWorkoutData();
 
+    const { workouts, setWorkouts } = useContext(WorkoutContext);
 
     const [sportType, setSportType] = useState('running');
     const [distance, setDistance] = useState('');
@@ -19,10 +19,11 @@ export default function AddWorkoutScreen() {
     const [visible, setVisible] = useState(false);
 
 
+
     const buttonOptions = [
-        { label: 'Running', value: 'running' },
-        { label: 'Cycling', value: 'cycling' },
-        { label: 'Swimming', value: 'swimming' },
+        { label: 'Running', value: 'running', icon: 'run'},
+        { label: 'Cycling', value: 'cycling' , icon: 'bike'},
+        { label: 'Swimming', value: 'swimming' , icon: 'swim'},
     ];
 
     const addWorkoutHandler = () => {
@@ -43,62 +44,65 @@ export default function AddWorkoutScreen() {
             date: date,
         };
 
-        addWorkout(workout);
-        console.log(workout);
+        setWorkouts([...workouts, workout]);
+        setDistance('');
+        setDuration('');
+
     };
     const generateUniqueId = () => {
         // Implement your logic to generate a unique ID
         // For simplicity, you might use a library like `uuid` or a timestamp-based approach
         return 'unique_id_' + Date.now();
-      };
+    };
 
     function dateSelected(day) {
         setVisible(false);
-        setDate(day.dateString);
+    
+        const selectedDate = new Date(day.dateString);
+        const formattedDate = selectedDate.toLocaleDateString();
+    
+        setDate(formattedDate);
     }
 
 
     return (
-        <Provider theme={MD3LightTheme}>
-            <SafeAreaView style={styles.container}>
-                <View>
-                    <Text>Sport Type:</Text>
-                        <View>
-                            <SegmentedButtons
-                                value={sportType}
-                                onValueChange={setSportType}
-                                buttons={buttonOptions}
-                            />
-                        </View>
-                    <Text>Distance (km):</Text>
-                    <TextInput
-                        keyboardType="numeric"
-                        value={distance}
-                        onChangeText={(text) => setDistance(text)}
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                    />
+        <View style={styles.container}>
+            
+            <View>
+                <SegmentedButtons
+                    value={sportType}
+                    onValueChange={setSportType}
+                    buttons={buttonOptions}
+                />
+            </View>
+            <TextInput
+                keyboardType="numeric"
+                mode='outlined'
+                label={'Distance (km)'}
+                value={distance}
+                onChangeText={setDistance}
+                style={{ marginBottom: 10, marginTop: 5}}
+            />
+            <TextInput
+                keyboardType="numeric"
+                mode='outlined'
+                label={'Duration (minutes)'}
+                value={duration}
+                onChangeText={setDuration}
+                style={{ marginBottom: 10}}
+            />
 
-                    <Text>Duration (minutes):</Text>
-                    <TextInput
-                        keyboardType="numeric"
-                        value={duration}
-                        onChangeText={(text) => setDuration(text)}
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                    />
-
-                    <Text>Date:</Text>
-                    <Pressable
-                        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
-                        onPress={() => setVisible(true)}>
-                        <Text style={{ fontSize: 19 }}>{date}</Text>
-                    </Pressable>
-                    <Modal visible={visible} transparent={true}>
-                        <Calendar onDayPress={dateSelected} />
-                    </Modal>
-                    <Button title="Add Workout" onPress={addWorkoutHandler} />
-                    <StatusBar style="auto" />
-                </View>
-            </SafeAreaView>
-        </Provider>
+            <Text>Date:</Text>
+            <Pressable
+                style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10, padding: 5 }}
+                onPress={() => setVisible(true)}>
+                <Text style={{ fontSize: 19 }}>{date}</Text>
+            </Pressable>
+            <Modal visible={visible} transparent={true}>
+                <Calendar onDayPress={dateSelected} />
+            </Modal>
+            <Button mode="contained" onPress={addWorkoutHandler}>Add Workout</Button>
+            <StatusBar style="auto" />
+        </View>
     );
 };

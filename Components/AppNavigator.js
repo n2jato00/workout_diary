@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AddWorkoutScreen from '../Screens/AddWorkout';
 import ListOfWorkouts from '../Screens/ListOfWorkouts';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { MyTheme } from '../Styles/MainStyle';
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +13,12 @@ const Tab = createBottomTabNavigator();
 export default function AppNavigator() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="AddWorkout">
+      <Tab.Navigator initialRouteName="AddWorkout"
+      screenOptions={{
+        tabBarActiveTintColor: 'black' , 
+        tabBarInactiveTintColor: MyTheme.colors.primary,
+        tabBarStyle: {backgroundColor: MyTheme.colors.surface},
+        }}>
         <Tab.Screen 
           name="AddWorkout" 
           component={AddWorkoutScreen} 
