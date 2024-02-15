@@ -8,19 +8,17 @@ export default function SettingsScreen() {
   const { units, setUnits } = useContext(WorkoutContext);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.setting}>
       <StatusBar style="auto" />
+      <Text style={styles.text}>Units</Text>
       <RadioButton.Group
         value={units}
         onValueChange={(newValue) => {
           setUnits(newValue);
         }}
       >
-        <View style={styles.container}>
-          <Text style={styles.text}>Units</Text>
-          <RadioButton.Item label="Kilometers" value="km" />
-          <RadioButton.Item label="Miles" value="mi" />
-        </View>
+        <RadioButton.Item label="Kilometers" value="km" />
+        <RadioButton.Item label="Miles" value="mi" />
       </RadioButton.Group>
     </View>
   );
