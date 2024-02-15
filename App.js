@@ -9,9 +9,10 @@ import { MyTheme } from './Styles/MainStyle';
 export default function App() {
 
   const [workouts, setWorkouts] = useState([]);
+  const [units, setUnits] = useState("km");
 
   return (
-    <WorkoutContext.Provider value={{ workouts, setWorkouts }}>
+    <WorkoutContext.Provider value={{ workouts, setWorkouts, units, setUnits }}>
       <PaperProvider theme={MyTheme}>
         <SafeAreaProvider>
           <AppNavigator />
