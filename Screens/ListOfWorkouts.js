@@ -5,7 +5,7 @@ import { Card, SegmentedButtons, Avatar, Icon } from 'react-native-paper';
 import { WorkoutContext } from '../Components/Context.js';
 
 export default function ListOfWorkouts() {
-  const { workouts } = useContext(WorkoutContext);
+  const { workouts, units } = useContext(WorkoutContext);
 
   const [selectedSportType, setSelectedSportType] = useState(null);
   const [totalDistance, setTotalDistance] = useState(0);
@@ -30,11 +30,6 @@ export default function ListOfWorkouts() {
     setTotalDuration(durationSum);
   };
 
-/*   const capitalizeFirstLetter = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }; */
-
-
   const renderItem = ({ item }) => {
     if (selectedSportType && item.sportType !== selectedSportType) {
       return null;
@@ -43,25 +38,25 @@ export default function ListOfWorkouts() {
     return (
       <Card style={{ marginBottom: 10 }}>
         <Card.Title
-              title={[item.date]}
-              titleVariant="titleMedium"
-              left={(props) => (
-                <Avatar.Icon
-                  {...props}
-                  icon={
-                    item.sportType === "running"
-                      ? "run"
-                      : item.sportType === "cycling"
-                      ? "bike"
-                      : item.sportType === "swimming"
-                      ? "swim"
-                      : "run"
-                  }
-                />
-              )}
+          title={[item.date]}
+          titleVariant="titleMedium"
+          left={(props) => (
+            <Avatar.Icon
+              {...props}
+              icon={
+                item.sportType === "running"
+                  ? "run"
+                  : item.sportType === "cycling"
+                  ? "bike"
+                  : item.sportType === "swimming"
+                  ? "swim"
+                  : "run"
+              }
             />
+          )}
+        />
         <Card.Content>
-          <Text>Distance: {item.distance} km</Text>
+          <Text>Distance: {convertDistance(item.distance)} {units}</Text>
           <Text>Duration: {item.duration} minutes</Text>
         </Card.Content>
       </Card>
@@ -78,6 +73,15 @@ export default function ListOfWorkouts() {
     { value: 'cycling', icon: 'bike'},
     { value: 'swimming', icon: 'swim'},
   ];
+
+  const convertDistance = (distance) => {
+    if (units === 'km') {
+      return distance.toFixed(2);
+    } else if (units === 'mi') {
+      // Convert kilometers to miles
+      return (distance * 0.621371).toFixed(2);
+    }
+  };
 
   return (
     <View style={styles.Flatlist}>
@@ -96,7 +100,7 @@ export default function ListOfWorkouts() {
       {selectedSportType && (
         <Card style={{ marginTop: 20 }}>
           <Card.Content>
-            <Text>Total Distance for {selectedSportType}: {totalDistance.toFixed(2)} km</Text>
+            <Text>Total Distance for {selectedSportType}: {convertDistance(totalDistance)} {units}</Text>
             <Text>Total Duration for {selectedSportType}: {totalDuration.toFixed(2)} minutes</Text>
           </Card.Content>
         </Card>

@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AddWorkoutScreen from '../Screens/AddWorkout';
 import ListOfWorkouts from '../Screens/ListOfWorkouts';
+import Settings from '../Screens/Settings';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { MyTheme } from '../Styles/MainStyle';
 
@@ -36,6 +37,16 @@ export default function AppNavigator() {
             tabBarLabel: 'List',
             tabBarIcon: ({ color }) => (
               <Icon name='format-list-bulleted' color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen 
+          name="Settings" 
+          component={Settings} 
+          options={{
+            tabBarLabel: 'Settings',
+            tabBarIcon: ({ color }) => (
+              <Icon name='cog' color={color} size={26} />
             ),
           }}
         />

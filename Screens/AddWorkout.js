@@ -10,7 +10,7 @@ import { WorkoutContext } from '../Components/Context.js';
 
 export default function AddWorkoutScreen() {
 
-    const { workouts, setWorkouts } = useContext(WorkoutContext);
+    const { workouts, setWorkouts, units } = useContext(WorkoutContext);
 
     const [sportType, setSportType] = useState('running');
     const [distance, setDistance] = useState('');
@@ -78,7 +78,7 @@ export default function AddWorkoutScreen() {
             <TextInput
                 keyboardType="numeric"
                 mode='outlined'
-                label={'Distance (km)'}
+                label={"Distance" + "(" + units + ")"} 
                 value={distance}
                 onChangeText={setDistance}
                 style={{ marginBottom: 10, marginTop: 5 }}

@@ -41,6 +41,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     }
+    },
+    text: {
+        fontSize: 30,
+    },
+    setting: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
 
 });
 
