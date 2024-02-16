@@ -21,7 +21,7 @@ export default function AppNavigator() {
         tabBarStyle: {backgroundColor: MyTheme.colors.surface},
         }}>
         <Tab.Screen 
-          name="AddWorkout" 
+          name="Add Workout" 
           component={AddWorkoutScreen} 
           options={{
             tabBarLabel: 'Workouts',
@@ -31,7 +31,7 @@ export default function AppNavigator() {
           }}
         />
         <Tab.Screen 
-          name="ListOfWorkouts" 
+          name="List Of Workouts" 
           component={ListOfWorkouts} 
           options={{
             tabBarLabel: 'List',
