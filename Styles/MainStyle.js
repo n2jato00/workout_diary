@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     Modal: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-    },
+    }
 
 });
 

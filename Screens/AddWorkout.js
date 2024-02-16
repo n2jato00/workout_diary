@@ -21,9 +21,9 @@ export default function AddWorkoutScreen() {
 
 
     const buttonOptions = [
-        { label: 'Running', value: 'running', icon: 'run'},
-        { label: 'Cycling', value: 'cycling' , icon: 'bike'},
-        { label: 'Swimming', value: 'swimming' , icon: 'swim'},
+        { label: 'Running', value: 'running', icon: 'run' },
+        { label: 'Cycling', value: 'cycling', icon: 'bike' },
+        { label: 'Swimming', value: 'swimming', icon: 'swim' },
     ];
 
     const addWorkoutHandler = () => {
@@ -57,17 +57,17 @@ export default function AddWorkoutScreen() {
 
     function dateSelected(day) {
         setVisible(false);
-    
+
         const selectedDate = new Date(day.dateString);
         const formattedDate = selectedDate.toLocaleDateString();
-    
+
         setDate(formattedDate);
     }
 
 
     return (
         <View style={styles.container}>
-            
+
             <View>
                 <SegmentedButtons
                     value={sportType}
@@ -81,7 +81,7 @@ export default function AddWorkoutScreen() {
                 label={'Distance (km)'}
                 value={distance}
                 onChangeText={setDistance}
-                style={{ marginBottom: 10, marginTop: 5}}
+                style={{ marginBottom: 10, marginTop: 5 }}
             />
             <TextInput
                 keyboardType="numeric"
@@ -89,7 +89,7 @@ export default function AddWorkoutScreen() {
                 label={'Duration (minutes)'}
                 value={duration}
                 onChangeText={setDuration}
-                style={{ marginBottom: 10}}
+                style={{ marginBottom: 10 }}
             />
 
             <Text>Date:</Text>
@@ -99,8 +99,13 @@ export default function AddWorkoutScreen() {
                 <Text style={{ fontSize: 19 }}>{date}</Text>
             </Pressable>
             <Modal visible={visible} transparent={true}>
-                <Calendar onDayPress={dateSelected} />
+                <View style={styles.Modal}>
+                    <View style={{width: '80%'}}>
+                    <Calendar onDayPress={dateSelected} />
+                    </View>
+                </View>
             </Modal>
+
             <Button mode="contained" onPress={addWorkoutHandler}>Add Workout</Button>
             <StatusBar style="auto" />
         </View>
